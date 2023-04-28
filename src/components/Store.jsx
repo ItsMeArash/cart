@@ -6,7 +6,13 @@ const Store = () => {
   const products = useContext(ProductContext);
 
   return (
-    <div style={{display: "flex", flexWrap: "wrap", justifyContent: "space-between"}}>
+    <div
+      style={{
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+      }}
+    >
       {products.map((item) => (
         <Product key={item.id} productData={item} />
       ))}

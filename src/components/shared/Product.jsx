@@ -15,8 +15,24 @@ const Product = ({ productData }) => {
       <div>
         <Link to={`/products/${productData.id}`}>Details</Link>
         <div>
-            {quantityCount(state, productData.id) === 1 && <button onClick={() => dispatch({type: "REMOVE_ITEM", payload: productData})}><img src={trashIcon} alt="Trash" style={{width: "20px"}}/></button>}
-            {quantityCount(state, productData.id) > 1 && <button onClick={() => dispatch({type: "DECREASE_ITEM", payload: productData})}>-</button>}
+          {quantityCount(state, productData.id) === 1 && (
+            <button
+              onClick={() =>
+                dispatch({ type: "REMOVE_ITEM", payload: productData })
+              }
+            >
+              <img src={trashIcon} alt="Trash" style={{ width: "20px" }} />
+            </button>
+          )}
+          {quantityCount(state, productData.id) > 1 && (
+            <button
+              onClick={() =>
+                dispatch({ type: "DECREASE_ITEM", payload: productData })
+              }
+            >
+              -
+            </button>
+          )}
           {isInCart(state, productData.id) ? (
             <button
               onClick={() =>
