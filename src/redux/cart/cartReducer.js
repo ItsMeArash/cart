@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+/* eslint-disable no-case-declarations */
 
 const sumItems = (items) => {
   const itemsCounter = items.reduce(
@@ -17,7 +17,7 @@ const initialState = {
   total: 0,
   checkout: false,
 };
-const cartReducer = (state, action) => {
+const cartReducer = (state = initialState, action) => {
   console.log(state);
   switch (action.type) {
     case "ADD_ITEM":
@@ -85,16 +85,5 @@ const cartReducer = (state, action) => {
   }
 };
 
-export const CartContext = React.createContext();
 
-const CartContextProvider = ({ children }) => {
-  const [state, dispatch] = useReducer(cartReducer, initialState);
-
-  return (
-    <CartContext.Provider value={{ state, dispatch }}>
-      {children}
-    </CartContext.Provider>
-  );
-};
-
-export default CartContextProvider;
+export default cartReducer;

@@ -1,14 +1,20 @@
-import React, { useContext } from "react";
+/* eslint-disable react/prop-types */
 import { Link } from "react-router-dom";
 
-import { nameShortener, isInCart, quantityCount } from "../../helper/functions";
-import { CartContext } from "../../context/CartContextProvider";
-import trashIcon from "../../assets/icons/trash.svg";
+import { useSelector, useDispatch } from "react-redux";
 
+import { nameShortener, isInCart, quantityCount } from "../../helper/functions";
+
+import trashIcon from "../../assets/icons/trash.svg";
 import styles from "./Product.module.css";
 
+import { addItem, removeItem, increase, decrease } from "../../redux/cart/cartAction";
+
 const Product = ({ productData }) => {
-  const { state, dispatch } = useContext(CartContext);
+
+  const state = useSelector(state => state.cartState)
+  const dispatch = useDispatch();
+
   return (
     <div className={styles.container}>
       <img
@@ -20,12 +26,12 @@ const Product = ({ productData }) => {
       <p>{productData.price}$</p>
       <div className={styles.linkContainer}>
         <Link to={`/products/${productData.id}`}>Details</Link>
-        <div>
+        <div className={styles.buttonContainer}>
           {quantityCount(state, productData.id) === 1 && (
             <button
               className={styles.smallButton}
               onClick={() =>
-                dispatch({ type: "REMOVE_ITEM", payload: productData })
+                dispatch(removeItem(productData))
               }
             >
               <img src={trashIcon} alt="Trash" style={{ width: "20px" }} />
@@ -35,7 +41,7 @@ const Product = ({ productData }) => {
             <button
               className={styles.smallButton}
               onClick={() =>
-                dispatch({ type: "DECREASE_ITEM", payload: productData })
+                dispatch(decrease(productData))
               }
             >
               -
@@ -50,7 +56,7 @@ const Product = ({ productData }) => {
             <button
               className={styles.smallButton}
               onClick={() =>
-                dispatch({ type: "INCREASE_ITEM", payload: productData })
+                dispatch(increase(productData))
               }
             >
               +
@@ -58,7 +64,7 @@ const Product = ({ productData }) => {
           ) : (
             <button
               onClick={() =>
-                dispatch({ type: "ADD_ITEM", payload: productData })
+                dispatch(addItem(productData))
               }
             >
               Add to Cart
